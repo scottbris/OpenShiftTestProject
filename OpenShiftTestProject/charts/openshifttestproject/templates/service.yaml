@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "openshifttestproject.fullname" . }}
+  labels:
+    app: {{ template "openshifttestproject.name" . }}
+    chart: {{ template "openshifttestproject.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app: {{ template "openshifttestproject.name" . }}
+    release: {{ .Release.Name }}
